@@ -1,35 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import { GifExpertApp } from "../GifExpertApp";
 
-export const AddCategory = (setCategories) => {
+export const AddCategory = ({ onNewCategory }) => {
+  const [inputValue, setInputValue] = useState("");
 
+  const onInputChange = ({ target }) => {
+    setInputValue(target.value);
+  };
 
-    const [inputValue, setInputValue] = useState()
-
-    const onInputChange = ({target}) =>{
-        setInputValue(target.value);
-        
-    }
-
-
-    const onSubmit=(event) => {
-       
-        event.preventDefault();
-        console.log(inputValue);
-        setCategories([...categories,inputValue]);
-    }
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (inputValue.trim().length <= 1) return;
+    /* setCategories((categories) => [inputValue, ...categories]); */
+    setInputValue("");
+    onNewCategory(inputValue.trim());
+  };
 
   return (
-    
-    <form onSubmit ={(event) => onSubmit(event)}>
-    <input
+    <form onSubmit={onSubmit}>
+      <input
         type="text"
         placeholder="Buscar gifs"
         value={inputValue}
-        onChange={ onInputChange}
-    />
+        onChange={onInputChange}
+      />
     </form>
-    
-    
-    
-  )
-}
+  );
+};
